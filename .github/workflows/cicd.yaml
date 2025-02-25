@@ -42,7 +42,7 @@ jobs:
         working-directory: terraform/
 
       - name: Initialisation de Terraform
-        run: terraform init -backend-config="bucket=tp-cicd-debacq-bucket"
+        run: terraform init
         working-directory: terraform/
 
       - name: Vérification Terraform
