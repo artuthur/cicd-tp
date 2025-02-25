@@ -6,19 +6,20 @@ resource "null_resource" "build_push_docker_image" {
   }
 }
 
-
-
-
 terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = ">= 4.0"
+      version = "~> 6.18.1"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.2.3"
     }
   }
-
-  required_version = ">= 1.0.0"
+  required_version = ">= 1.5.0"
 }
+
 
 provider "google" {
   project = var.project_id
