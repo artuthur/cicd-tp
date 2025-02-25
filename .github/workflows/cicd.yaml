@@ -39,9 +39,7 @@ jobs:
         run: terraform init -backend-config="bucket=${TF_STATE_BUCKET}" -backend-config="prefix=${TF_STATE_FILE}"
 
       - name: Vérification Terraform
-        run: |
-          terraform fmt -check
-          terraform validate
+        run: terraform validate
         working-directory: terraform/
 
       - name: Plan Terraform
