@@ -1,3 +1,3 @@
-project_id = "terraform-tp-debacq"
-bucket_name = "terraform-tp-debacq-bucket"
-docker_image = "gcr.io/terraform-tp-debacq/flask2-app"
+project_id = "githubcicd-tp"
+bucket_name = "ttp-cicd-debacq-bucket"
+docker_image = "gcr.io/githubcicd-tp/flask2-app"

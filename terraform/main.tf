@@ -7,12 +7,6 @@ resource "null_resource" "build_push_docker_image" {
 }
 
 terraform {
-
-  backend "gcs" {
-    bucket  = "tp-cicd-debacq-bucket"
-    prefix  = "terraform/state"
-  }
-
   required_providers {
     google = {
       source  = "hashicorp/google"
