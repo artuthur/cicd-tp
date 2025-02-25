@@ -7,3 +7,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.terraform
+
+githubcicd-tp-5e3b61989929.json
+

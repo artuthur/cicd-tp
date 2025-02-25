@@ -51,3 +51,18 @@ This project was created by wachter.
 
 
  
+---
+
+# Préparation 
+
+## Création du Bucket
+
+```bash
+gcloud storage buckets create gs://tp-cicd-debacq-bucket --project=githubcicd-tp
+```
+
+## Export de la variable
+
+```bash
+export BUCKET_NAME=tp-cicd-debacq-bucket
+```
