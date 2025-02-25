@@ -21,24 +21,25 @@ before_script:
   - gcloud config set compute/region $GOOGLE_REGION
   - terraform --version
 
-terraform_validate:
-  image: hashicorp/terraform:${TF_VERSION}
-  stage: validate
-  script:
-    - terraform init
-    - terraform fmt -check
-    - terraform validate
+jobs:
+  terraform_validate:
+    image: hashicorp/terraform:${TF_VERSION}
+    stage: validate
+    script:
+      - terraform init
+      - terraform fmt -check
+      - terraform validate
 
-terraform_plan:
-  image: hashicorp/terraform:${TF_VERSION}
-  stage: plan
-  script:
-    - terraform init 
-    - terraform plan 
+  terraform_plan:
+    image: hashicorp/terraform:${TF_VERSION}
+    stage: plan
+    script:
+      - terraform init 
+      - terraform plan 
 
-terraform_apply:
-  image: hashicorp/terraform:${TF_VERSION}
-  stage: apply
-  when: manual
-  script:
-    - terraform apply
+  terraform_apply:
+    image: hashicorp/terraform:${TF_VERSION}
+    stage: apply
+    when: manual
+    script:
+      - terraform apply
