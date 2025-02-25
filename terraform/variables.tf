@@ -1,6 +1,7 @@
 variable "project_id" {
   description = "L'identifiant du projet GCP"
   type        = string
+  default = "githubcicd-tp"
 }
 
 variable "region" {
