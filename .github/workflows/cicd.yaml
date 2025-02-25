@@ -9,7 +9,7 @@ env:
   GOOGLE_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
   GOOGLE_PROJECT_ID: "githubcicd-tp"
   GOOGLE_REGION: "eu-west1"
-  TF_VERSION: "1.15.5"
+  TF_VERSION: "1.10.5"
   TF_STATE_BUCKET: "tp-cicd-debacq-bucket"
   TF_STATE_FILE: "terraform.tfstate"
 
