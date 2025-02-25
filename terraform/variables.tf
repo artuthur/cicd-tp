@@ -18,7 +18,7 @@ variable "zone" {
 variable "bucket_name" {
   description = "Le nom du bucket Cloud Storage"
   type        = string
-  default     = "terraform-tp-debacq-bucket"
+  default     = "tp-cicd-debacq-bucket"
 }
 
 variable "docker_image" {

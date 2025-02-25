@@ -41,7 +41,6 @@ jobs:
           terraform init -upgrade
         working-directory: terraform/
 
-
       - name: Initialisation de Terraform
         run: terraform init -backend-config="bucket=${TF_STATE_BUCKET}" -backend-config="prefix=${TF_STATE_FILE}"
 
