@@ -1,45 +1,51 @@
-name: test cicd
+name: Test déploiement CICD
+
 on:
   push:
     branches:
       - main
 
-stages:
-  - validate
-  - plan
-  - apply
-
-variables:
-  TF_VERSION: "1.10.5"
+env:
+  GOOGLE_CREDENTIALS: ${{ secrets.SERVICE_ACCOUNT_KEY }}
   GOOGLE_PROJECT_ID: "githubcicd-tp"
-  GOOGLE_REGION: "europe-west1"
-
-before_script:
-  - echo "Authentification GCP..."
-  - gcloud auth activate-service-account --key-file=${CI_PROJECT_DIR}/githubcicd-tp-5e3b61989929.json
-  - gcloud config set project $GOOGLE_PROJECT_ID
-  - gcloud config set compute/region $GOOGLE_REGION
-  - terraform --version
+  GOOGLE_REGION: "eu-west1"
+  TF_VERSION: "1.15.5"
+  TF_STATE_BUCKET: "tp-cicd-debacq-bucket"
+  TF_STATE_FILE: "terraform.tfstate"
 
 jobs:
-  terraform_validate:
-    image: hashicorp/terraform:${TF_VERSION}
-    stage: validate
-    script:
-      - terraform init
-      - terraform fmt -check
-      - terraform validate
+  terraform:
+    name: Terraform Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
-  terraform_plan:
-    image: hashicorp/terraform:${TF_VERSION}
-    stage: plan
-    script:
-      - terraform init 
-      - terraform plan 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  terraform_apply:
-    image: hashicorp/terraform:${TF_VERSION}
-    stage: apply
-    when: manual
-    script:
-      - terraform apply
+      - name: Authentification GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+      - name: Installer Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Initialisation de Terraform
+        run: terraform init -backend-config="bucket=${TF_STATE_BUCKET}" -backend-config="prefix=${TF_STATE_FILE}"
+
+      - name: Vérification Terraform
+        run: |
+          terraform fmt -check
+          terraform validate
+
+      - name: Plan Terraform
+        run: terraform plan -out=tfplan
+
+      - name: Appliquer Terraform (Manual Approval)
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
