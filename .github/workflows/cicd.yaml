@@ -35,12 +35,6 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: 🛠️ Réinitialisation de Terraform (cache)
-        run: |
-          rm -rf .terraform .terraform.lock.hcl
-          terraform init -upgrade
-        working-directory: terraform/
-
       - name: Initialisation de Terraform
         run: terraform init
         working-directory: terraform/
